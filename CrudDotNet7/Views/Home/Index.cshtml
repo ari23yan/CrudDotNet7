@@ -1,8 +1,53 @@
-﻿@{
+﻿@model List<CrudDotNet7.Models.ViewModels.UserListViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+@{if(!User.Identity.IsAuthenticated)
+{
+        <h3>You Need to Login To see User List</h3>
+        <a asp-action="Login" asp-controller="Account" class="btn btn-primary">Login Page</a>
+    }
+    else
+    {
+        
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    foreach (var item in Model)
+    {
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>LastName</th>
+                    <th>UserName</th>
+                    <th>Mobile</th>
+                    <th>Is Admin</th>
+                    <th>Is Deleted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.LastName</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Mobile</td>
+                    <td>@item.IsAdmin</td>
+                    <td>@item.IsDeleted</td>
+                </tr>
+            </tbody>
+   
+        </table>
+    }
+    }
+
+}
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
+<script>
+    new DataTable('#example');
+</script>

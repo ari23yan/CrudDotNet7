@@ -7,8 +7,9 @@ namespace CrudDotNet7.Models.ViewModels
         [Required]
         public string Name { get; set; }
         [Required]
-
         public string LastName { get; set; }
+        [Required]
+        public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

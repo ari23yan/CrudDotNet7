@@ -9,6 +9,7 @@ namespace CrudDotNet7.Profiles
         public UserProfile()
         {
             CreateMap<User, RegisterUserViewModel>().ReverseMap();
+            CreateMap<User, UserListViewModel>().ReverseMap();
         }
     }
 }

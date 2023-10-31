@@ -1,4 +1,8 @@
-﻿using CrudDotNet7.Models;
+﻿using AutoMapper;
+using CrudDotNet7.Models;
+using CrudDotNet7.Models.Entities;
+using CrudDotNet7.Models.ViewModels;
+using CrudDotNet7.Repository.Interfacess;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +11,22 @@ namespace CrudDotNet7.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, IUserRepository user, IMapper mapper)
         {
             _logger = logger;
+            _userRepository = user;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var users = await _userRepository.GetAll();
+            var user = _mapper.Map<List<UserListViewModel>>(users);
+            return View(user);
         }
 
         public IActionResult Privacy()

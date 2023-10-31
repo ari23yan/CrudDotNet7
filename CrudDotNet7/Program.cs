@@ -1,5 +1,7 @@
 using CrudDotNet7.Models.Context;
 using CrudDotNet7.Models.Entities;
+using CrudDotNet7.Repository.Impelemantation.User;
+using CrudDotNet7.Repository.Interfacess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,8 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 builder.Services.AddScoped<UserManager<User>>();
 builder.Services.AddScoped<SignInManager<User>>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 var app = builder.Build();
 
