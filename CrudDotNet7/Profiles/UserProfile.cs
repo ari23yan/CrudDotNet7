@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CrudDotNet7.Models.Entities;
 using CrudDotNet7.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace CrudDotNet7.Profiles
 {
@@ -10,6 +11,7 @@ namespace CrudDotNet7.Profiles
         {
             CreateMap<User, RegisterUserViewModel>().ReverseMap();
             CreateMap<User, UserListViewModel>().ReverseMap();
+
         }
     }
 }

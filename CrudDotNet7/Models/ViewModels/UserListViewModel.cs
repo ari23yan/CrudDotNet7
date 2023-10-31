@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace CrudDotNet7.Models.ViewModels
 {
     public class UserListViewModel
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }

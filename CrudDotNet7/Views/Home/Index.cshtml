@@ -5,49 +5,116 @@
 }
 <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
-@{if(!User.Identity.IsAuthenticated)
-{
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
         <h3>You Need to Login To see User List</h3>
         <a asp-action="Login" asp-controller="Account" class="btn btn-primary">Login Page</a>
     }
     else
     {
-        
 
-    foreach (var item in Model)
-    {
-        <table id="example" class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>LastName</th>
-                    <th>UserName</th>
-                    <th>Mobile</th>
-                    <th>Is Admin</th>
-                    <th>Is Deleted</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.LastName</td>
-                    <td>@item.UserName</td>
-                    <td>@item.Mobile</td>
-                    <td>@item.IsAdmin</td>
-                    <td>@item.IsDeleted</td>
-                </tr>
-            </tbody>
-   
-        </table>
+            @foreach (var item in Model)
+            {
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>LastName</th>
+                        <th>UserName</th>
+                        <th>Mobile</th>
+                        <th>Is Admin</th>
+                        <th>Is Deleted</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.LastName</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Mobile</td>
+                        <td>@item.IsAdmin</td>
+                        <td>@item.IsDeleted</td>
+                        <td>
+
+                                <a href="#" id="btnEdit" class="btn btn-primary btn-sm" data-id="@item.Id">Edit</a>
+
+
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+   <div id="MyPopup" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Customer Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form  asp-action="Update" asp-controller="Home" method="post">
+                                    <div class="form-group">
+                                        Name: <input id="txtName" name="nameU" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Update" class="btn btn-success btn-sm" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="btnClosePopup" value="Close" data-dismiss="modal" class="btn btn-danger" />
+                </div>
+            </div>
+        </div>
+        </div>
+       
+
     }
-    }
+}
 
 }
 
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
+
 <script>
     new DataTable('#example');
+
+    $(function () {
+        $("body").on('click', '#btnEdit', function () {
+            $("#MyPopup").modal("hide");
+            var obj = {};
+            obj.Id = $(this).attr('data-id');
+
+            $.ajax({
+                url: 'Home/Edit',
+                data: JSON.stringify(obj),
+                type: 'POST',
+                dataType: 'html',
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    var id = JSON.parse(response).Id;
+                    var name = JSON.parse(response).Name;
+                    var country = JSON.parse(response).Country;
+                    $('#nameu').val(id);
+                    // $('#txtName').val(name);
+                    // $('#txtCountry').val(country);
+                    $("#MyPopup").modal("show");
+                }
+            });
+        });
+    });
 </script>

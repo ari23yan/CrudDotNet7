@@ -1,5 +1,4 @@
-﻿using CrudDotNet7.Migrations;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace CrudDotNet7.Utilities.PasswordHelper

@@ -29,7 +29,7 @@ namespace CrudDotNet7.Repository.Impelemantation.User
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<Models.Entities.User> GetUserById(Guid id)
+        public async Task<Models.Entities.User> GetUserById(string id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }

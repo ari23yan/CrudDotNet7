@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudDotNet7.Migrations
 {
     [DbContext(typeof(CrudDbContext))]
-    [Migration("20231030025306_init")]
+    [Migration("20231031053015_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -75,10 +75,6 @@ namespace CrudDotNet7.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
