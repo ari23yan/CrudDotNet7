@@ -10,6 +10,7 @@ namespace CrudDotNet7.Repository.Interfacess
         Task<User> LoginUser(LoginUserViewModel model);
         Task<bool> CheckUserIsActive(string userName);
         Task<List<User>> GetAll();
+        Task<bool> DeleteUser(string id);
 
     }
 }

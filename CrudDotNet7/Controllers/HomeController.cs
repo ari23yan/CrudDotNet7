@@ -30,31 +30,44 @@ namespace CrudDotNet7.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.ToListAsync();
+            var users = await _userRepository.GetAll();
             var user = _mapper.Map<List<UserListViewModel>>(users);
             return View(user);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromBody] User id)
+        public async Task<IActionResult> Edit([FromBody] EditUserViewModel model)
         {
-            var existingUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id.ToString());
+            var existingUser = await _userRepository.GetUserById(model.Id);
             if (existingUser == null)
             {
                 return NotFound();
             }
-
-            existingUser.Name = "asa";
-            // Update other properties as needed
-
-            return NoContent();
+            var user = _mapper.Map<UserViewModel>(existingUser);
+            return Json(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateUserViewModel model)
+        {
+            var user = await _userRepository.GetUserById(model.Id);
+            if(user == null)
+            {
+                return NotFound();
+            }
+            user.Mobile = model.Mobile;
+            user.Name = model.Name;
+            user.LastName = model.LastName;
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction("Index");
         }
 
-        //public async Task<IActionResult> Edit()
-        //{
-        //    var users = await _userRepository.GetAll();
-        //}
-
+        [HttpPost]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            var user = await _userRepository.DeleteUser(Id);
+            return RedirectToAction("Index");
+        }
+  
         public IActionResult Privacy()
         {
             return View();

@@ -11,6 +11,7 @@ namespace CrudDotNet7.Profiles
         {
             CreateMap<User, RegisterUserViewModel>().ReverseMap();
             CreateMap<User, UserListViewModel>().ReverseMap();
+            CreateMap<User, UserViewModel>().ReverseMap();
 
         }
     }

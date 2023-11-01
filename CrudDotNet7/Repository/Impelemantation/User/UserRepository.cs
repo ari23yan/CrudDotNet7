@@ -3,6 +3,7 @@ using CrudDotNet7.Models.Entities;
 using CrudDotNet7.Models.ViewModels;
 using CrudDotNet7.Repository.Interfacess;
 using CrudDotNet7.Utilities.PasswordHelper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,19 @@ namespace CrudDotNet7.Repository.Impelemantation.User
         public async Task<Models.Entities.User> GetUserById(string id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<bool> DeleteUser(string id)
+        {
+            var user=  await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if(user != null)
+            {
+                user.IsDeleted = true;
+                _context.Users.Update(user);
+                _context.SaveChanges();
+            }
+            return false;
+
         }
 
         public async Task<Models.Entities.User> GetUserByUserName(string userName)
